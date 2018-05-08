@@ -1,0 +1,112 @@
+﻿@model United_Caring_Services.Models.upload
+
+@{
+    ViewBag.Title = "File Upload";
+}
+
+<h2>File Upload</h2>
+
+
+@if (User.IsInRole("Administrator"))
+{
+    using (Html.BeginForm("imageUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-horizontal">
+            <h4>Upload an File/Image to Use</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.fileName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.fileName, new { htmlAttributes = new { @class = "form-control", @placeholder = "filename.filetype" } })
+                    @Html.ValidationMessageFor(model => model.fileName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.collection, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="input-group input-file" name="collection">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                        </span>
+                        <input name="collection" type="text" class="form-control" id="collection" placeholder='Choose a file...' />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-success alert-dismissible" role="alert" style="display:none" id="successMessage">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Upload Successful!</strong>
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert" style="display:none" id="failureMessage">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Oops something went wrong!</strong>@TempData["message"]
+        </div>
+    }
+    if (TempData["success"].Equals("success"))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#successMessage').show();
+            })
+        </script>
+    }
+    if (TempData["success"].Equals("failure"))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#failureMessage').show();
+            })
+        </script>
+    }
+    <script type="text/javascript">
+        function bs_input_file() {
+            $(".input-file").before(
+                function () {
+                    if (!$(this).prev().hasClass('input-ghost')) {
+                        var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
+                        element.attr("name", $(this).attr("name"));
+                        element.change(function () {
+                            element.next(element).find('input').val((element.val()).split('\\').pop());
+                        });
+                        $(this).find("button.btn-choose").click(function () {
+                            element.click();
+                        });
+                        $(this).find("button.btn-reset").click(function () {
+                            element.val(null);
+                            $(this).parents(".input-file").find('input').val('');
+                        });
+                        $(this).find('input').css("cursor", "pointer");
+                        $(this).find('input').mousedown(function () {
+                            $(this).parents('.input-file').prev().click();
+                            return false;
+                        });
+                        return element;
+                    }
+                }
+            );
+        }
+        $(function () {
+            bs_input_file();
+        });
+
+    </script>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

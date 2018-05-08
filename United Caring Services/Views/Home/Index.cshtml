@@ -1,0 +1,32 @@
+﻿@model United_Caring_Services.Models.HomeViewModel
+@using WebMatrix.Data;
+
+@{
+    ViewBag.Title = "Home Page";
+    string token = System.Configuration.ConfigurationManager.AppSettings["facebookKey"];
+}
+<div class="col-xs-12" style="top:30px;">
+    <div id="box0" class="col-xs-12 col-md-10" style="border:none;padding-bottom:2rem;">
+        @Html.Action("getContent", "Home", new { page = "index", id = "box1" })
+    </div>
+    <br />
+    <div class="col-xs-12 col-md-10 no-padding" >
+        <div class="col-xs-12 col-md-4 no-padding" style="height:600px;" id="box1">
+            @Html.Action("getContent", "Home", new { page = "index", id = "box2" })
+        </div>
+        <div class="col-xs-12 col-md-4 no-padding" style="height:600px;" id="box2">
+            @Html.Action("getContent", "Home", new { page = "index", id = "box3" })
+        </div>
+        <div class="col-xs-12 col-md-4 no-padding" style="height:600px;" id="box3">
+            @Html.Action("getContent", "Home", new { page = "index", id = "box4" })
+        </div>
+    </div>
+</div>
+<div id="sidebar" class="col-xs-2" style="top:30px;">
+    @Html.Action("getContent", "Home", new { page = "index", id = "Sidebar" })
+</div>
+
+    <script src="~/Scripts/some.js?v1"></script>
+    <script type="text/javascript">
+    fbfd("token","posts");
+    </script>

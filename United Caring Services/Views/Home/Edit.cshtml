@@ -1,0 +1,185 @@
+﻿@model List<SelectListItem>
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@if (User.IsInRole("Administrator"))
+{
+    <h2>Edit Content</h2>
+        <form id="edit">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="form-group row">
+                        @Html.Label("Page Select", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.DropDownList("pages", Model, "Select", new { onchange = "javascript:getBoxes()", @class = "dropdown" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.Label("Box Select", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            <select class="dropdown" id="boxes" name="boxes"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("Image Names", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.TextBox("images")
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("Url Names", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.TextBox("urlNames")
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("Url Address", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.TextBox("urls")
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("Files", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.TextBox("files")
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("File Names", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            @Html.TextBox("filenames")
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.Label("Content", new { @class = "col-xs-1 col-form-label", @style = "text-align:right" })
+                        <div class="col-xs-10">
+                            <textarea type="text" id="content" style="width:100%;overflow-y: hidden;"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 text-center">
+                        <button class="btn btn-primary" type="submit">Submit Changes</button>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="display:none" id="selectFail">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Oops change your page to something other than select to update!</strong>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible" role="alert" style="display:none" id="boxFail">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Oops you forgot to enter a box to upload the content to!</strong>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <script language="javascript" type="text/javascript">
+
+            function getBoxes() {
+                var procemessage = "<option value='0'> Please wait...</option>";
+                $("#boxes").html(procemessage).show();
+                var url = "/Home/getBoxes/";
+                var selPage = $('#pages :selected').text();
+
+                $.ajax({
+                    url: url,
+                    data: { page: selPage },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        console.log(data);
+                        var markup = "<option value='0'>Select Box</option>";
+                        for (var x = 0; x < data.length; x++) {
+                            console.log(x);
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#boxes").html(markup).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+
+            }
+
+            $('#boxes').change(function () {
+                var url = "/Home/getBoxContent/";
+                var selPage = $('#pages :selected').text();
+                var selBox = $('#boxes :selected').text();
+
+
+                $.ajax({
+                    url: url,
+                    data: { page: selPage, id: selBox },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        console.log(data);
+                        $('#content').val(data);
+                        setHeight();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            })
+
+            function setHeight() {
+                var sHeight = $('#content').prop('scrollHeight');
+                $('#content').css('height', sHeight);
+            }
+
+
+            $('#edit').on("submit", function (e) {
+                e.preventDefault();
+                var url = "/Home/PostEdit/";
+                var selPage = $('#pages :selected').text();
+                var selBox = $('#boxes :selected').text();
+                var content = $('#content').val();
+                var images = $('#images').val();
+                var urlNames = $('#urlNames').val();
+                var urls = $('#urls').val();
+                var files = $('#files').val();
+                var fileNames = $('#filenames').val();
+
+                if (selPage != 'Select' && selBox != "" && selBox != 'Select Box') {
+                    $.ajax({
+                        url: url,
+                        data: { page: selPage, id: selBox, text: content, images: images, urls: urls, urlNames: urlNames, files: files, fileNames: fileNames },
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            location.reload();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                } else if (selPage == 'Select') {
+                    $('#selectFail').show();
+                    $('html, body').animate({
+                        scrollTop: parseInt($('#selectFail').offset().top)
+                    }, 2000);
+                    return false;
+                } else if (selBox == 'Select Box') {
+                    $('#boxFail').show();
+                    $('html, body').animate({
+                        scrollTop: parseInt($('#boxFail').offset().top)
+                    }, 2000);
+                    return false;
+                }
+            });
+
+
+        </script>
+
+    }

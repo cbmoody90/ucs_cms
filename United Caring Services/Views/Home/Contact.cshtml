@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+}
+
+<br />
+<div class="row center-block">
+    <div class="col-xs-12 col-md-4">
+        @Html.Action("getContent", "Home", new { page = "contact", id = "box1" })
+    </div>
+    <div class="col-xs-12 col-md-4">
+        @Html.Action("getContent", "Home", new { page = "contact", id = "box2" })
+    </div>
+    <div class="col-xs-12 col-md-4" style="margin-left:10px;"id="map">
+    </div>
+    <br />
+    <br />
+    <div class="col-xs-12">
+        <address>
+            @Html.Action("getContent", "Home", new { page = "contact", id = "box3" })
+        </address>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function initMap() {
+
+        var ucs = {
+            info: '<strong>United Caring Services</strong><br>\
+                        324 NW 6th St<br> Evansville, IN 47708<br>\
+                        <a href="https://goo.gl/maps/8h7iE59N3xS2">Get Directions</a>',
+            lat: 37.9757,
+            long: -87.5714
+        };
+
+        var ruth = {
+            info: '<strong>Ruth\'s House</strong><br>\
+                        321 E Walnut St<br> Evansville, IN 47713<br>\
+                        <a href="https://goo.gl/maps/5ZEefCg89cs">Get Directions</a>',
+            lat: 37.9734659,
+            long: -87.5594
+        };
+
+        var locations = [
+            [ucs.info, ucs.lat, ucs.long, 0],
+            [ruth.info, ruth.lat, ruth.long, 1],
+        ];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: new google.maps.LatLng(37.9754684, -87.56525),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow({});
+
+        var marker, i;
+
+        for (i = 0; i < locations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                map: map
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(locations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6uL1sVZ6x6EgMrcOqFYC0vGjc1LuTjG8&callback=initMap">
+</script>

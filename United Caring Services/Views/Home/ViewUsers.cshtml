@@ -1,0 +1,28 @@
+﻿@model IEnumerable<United_Caring_Services.Models.Users>
+
+@{
+    ViewBag.Title = "Add Admin Users";
+}
+
+<h2>Add Admin Users</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Make Admin", "MakeAdmin", new { email = item.UserName })
+            </td>
+        </tr>
+    }
+
+</table>

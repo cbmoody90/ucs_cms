@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="~/Assets/tlogoucs.ico" type="image/x-icon" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <title>United Caring Services</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("scripts", required: false)
+
+</head>
+<body>
+    <div class="row">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href='@Url.Action("Index", "Home")'>
+                        <img src='@Url.Content("~/Assets/logo.png")' height="90" width="180" style="padding-top:20px;" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse navbar-right" style="right:0px">
+                    <ul class="nav navbar-nav" id="nav">
+                        <li id="navItems" class="menuAddr" style="padding-bottom:10px;">
+                            <canvas id="redflag" width="100" hidden></canvas>
+                            <canvas id="whiteflag" hidden></canvas>
+                        </li>
+                        <li>
+                            <a id="navItems" class="menuAddr">Men's Shelter <br /> 324 NW Sixth Street <br /> Evansville, IN 47708 <br /> 812-426-9960</a>
+                        </li>
+                        <li>
+                            <a id="navItems" class="menuAddr">
+                                Ruth's House <br /> 321 E Walnut St<br /> Evansville, IN 47713 <br /> 812-402-0424
+                            </a>
+                        </li>
+                        <li>
+                            <a id="navItems" href="https://www.networkforgood.org/donation/MakeDonation.aspx?ORGID2a=351892153&vlrStratCode=EKnL%2fO7zjWjYp5bf6T94vXUAnANUiQSkNhk6C%2fIPVqyCM%2b9%2bgtoMhCOnf2%2fMBZvX" class="menuAddr" >
+                                <img style="padding-top:10px;" src="~/Assets/donate.png" />
+                                Donate
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <nav id="subMenu" class="col-xs-12" style="top:80px;left:20px">
+            <ul class="nav nav-pills">
+                <li class="dropdown">
+                    <a class="dropdown-toggle sec-link" data-toggle="dropdown" href="#">
+                        Who We Are
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu nav-pills secondary ">
+                        <li class="nav-item">
+                            @Html.ActionLink("About", "About", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Our Board of Directors", "Directors", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Our Staff", "Staff", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Contact Us", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle sec-link" data-toggle="dropdown" href="#">
+                        How We Help
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu nav-pills secondary ">
+                        <li class="nav-item">
+                            @Html.ActionLink("Men's Shelter", "day", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Ruth's House", "ruth", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Permanent Housing", "Housing", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Homeless Medical Respite", "Medical", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("White/Red Flag", "Flag", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Events", "Events", "Home", routeValues: null, htmlAttributes: new { @class = "sec-link" })
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle sec-link" data-toggle="dropdown" href="#">
+                        You Can Help
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu nav-pills secondary ">
+                        <li class="nav-item">
+                            @Html.ActionLink("Donate", "give", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Volunteer", "Volunteer", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                            @Html.ActionLink("Tell A Friend", "TellFriend", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                            -->
+                        </ul>
+                    </li>
+                        @if (User.IsInRole("Administrator"))
+    {
+                    <li class="nav-item">
+                        @Html.ActionLink("Admin", "Admin", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    </li>
+}
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+</nav>
+    </div>
+    <div class="container slideContainer">
+        <div id="leaves">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+        <div class="maincon">
+            @RenderBody()
+        </div>
+    </div>
+    <br />
+    <hr />
+    <footer id="footer" class="col-xs-12" style="min-height:150px">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 footerDiv">
+                    @Html.Action("getContent", "Home", new { page = "Footer", id = "box1" })
+             
+            </div>
+            <div class="col-xs-12 col-sm-3 footerDiv">
+                    @Html.Action("getContent", "Home", new { page = "Footer", id = "box2" })
+                
+            </div>
+            <div class="col-xs-12 col-sm-3 footerDiv">
+                    @Html.Action("getContent", "Home", new { page = "Footer", id = "box3" })
+            
+            </div>
+            <div class="col-xs-12 col-sm-3 footerDiv">
+                    @Html.Action("getContent", "Home", new { page = "Footer", id = "box4" })
+            
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <center>&copy; United Caring Services 2018</center>
+        </div>
+    </footer>
+    <link href="~/css/main.css" rel="stylesheet" />
+    <script src="~/Scripts/flags.js?v6"></script>
+    <script language="javascript" type="text/javascript">
+        $(function(){
+            let path = "/Home/GetFlags/"
+
+            $.ajax({
+                url: path,
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    console.log(data);
+                    let whiteflag = data.response.Whiteflag;
+                    let redflag = data.response.Redflag;
+
+                    if (redflag == true) {
+                        showflag(1);
+                    }
+                    if (whiteflag == true) {
+                        showflag(2);
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

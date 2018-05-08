@@ -1,0 +1,41 @@
+﻿div.navbar {
+    background-color: rgba(101, 45, 137, 1);
+    border-bottom: 3px solid #439539;
+}
+
+.well{
+    border:none;
+}
+div#map {
+    height: 600px;
+    width: 800px;
+    border: 2px solid rgba(101, 45, 137, 1);
+    background-color: grey;
+}
+
+.carousel-inner {
+    min-height: 50%;
+    max-height: 50%;
+    width: 100%;
+}
+
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a:focus,
+.navbar-inverse .navbar-nav>a {
+    background-color: rgba(101, 45, 137, 1);
+    color: white;
+}
+
+
+@media (max-width: 767px) {
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+        color: white;
+    }
+    ul.dropdown-menu,
+    ul.dropdown-menu li {
+        padding: 0px;
+        margin-top: 0px;
+        border: none;
+    }
+}

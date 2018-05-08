@@ -1,0 +1,33 @@
+﻿@model IEnumerable<United_Caring_Services.Models.UserRoles>
+
+@{
+    ViewBag.Title = "Admin Users";
+}
+
+<h2>Admin Users</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserRole)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserRole)
+        </td>
+        <td>
+            @Html.ActionLink("Remove Administrator Role", "DeleteAdminUser", new { email=item.UserName })
+        </td>
+    </tr>
+}
+
+</table>

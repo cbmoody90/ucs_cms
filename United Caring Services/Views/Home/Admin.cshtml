@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Admin Menu Options</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+ 
+<ul style="list-style-type:none">
+    <li>
+        @Html.ActionLink("Edit Content", "Edit", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+    </li>
+    <li>
+        @Html.ActionLink("Upload Files/Images", "imageUpload", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+    </li>
+    <li>
+        @Html.ActionLink("Add Admin User", "ViewUsers", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+    </li>
+
+    <li>
+        @Html.ActionLink("View Admin Users", "AdminUsers", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+    </li>
+    <li>
+        @Html.ActionLink("Change Flag Status", "ChangeFlagStatus", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+    </li>
+
+</ul>
+}
+

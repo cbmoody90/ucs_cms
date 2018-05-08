@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Events";
+    string token = System.Configuration.ConfigurationManager.AppSettings["facebookKey"];
+}
+<br />
+<br />
+<div class="col-xs-12 col-md-4" style="text-align:center;">
+    <h3 style="color:rgba(101, 45, 137, 1)"> Upcoming Events</h3>
+    <p> Check out our list for upcoming events. Click the event name to go view the event on facebook for more information
+    <img class="img-responsive" src="~/Assets/events.jpg" />
+    </p>
+
+</div>
+<div class="col-xs-12 col-md-6 col-md-offset-1" style="text-align:center">
+    <br />
+    <ul id="eventsTable" style="list-style:none"></ul>
+
+</div>
+
+<script src="~/Scripts/some.js?v4"></script>
+<script type="text/javascript">
+    fbfd("@token", "events");
+</script>

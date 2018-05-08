@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Staff";
+}
+
+<h2>Our Staff</h2>
+<div class="col-xs-10">
+    <div id="box1" class="col-xs-12">
+        @Html.Action("getContent", "Home", new { page = "Staff", id = "box1" })
+    </div>
+    <div id="box2" class="col-xs-5">
+        @Html.Action("getContent", "Home", new { page = "Staff", id = "box2" })
+    </div>
+    <div id="box3" class="col-xs-5">
+        @Html.Action("getContent", "Home", new { page = "Staff", id = "box3" })
+    </div>
+</div>
+<div class="col-xs-2">
+    @Html.Action("getContent", "Home", new { page = "Staff", id = "Sidebar" })
+</div>
+

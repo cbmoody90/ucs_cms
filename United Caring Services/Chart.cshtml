@@ -1,0 +1,12 @@
+﻿@using WebMatrix.Data;
+@{
+    var db = Database.Open("UCSConnection");
+    var data = db.Query("SELECT totalMeals, LEFT(monthYear,7) monthYear FROM monthlyStats where timeOfDay = 'Total' order by monthYear asc");
+    var myChart = new Chart(width: 600, height: 400)
+        .AddTitle("Meals Served by Month")
+        .AddSeries("Default",
+        xValue: data, xField: "monthYear",
+        yValues: data, yFields: "totalMeals")
+        .Write();
+}
+
