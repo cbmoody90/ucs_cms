@@ -85,6 +85,7 @@ namespace United_Caring_Services.Controllers
                 int length = listEnd - (listStart + 6);
                 string listString = myStringBuilder.ToString(listStart + 6, length);
                 string[] listItems = listString.Split(';');
+		 //Make sure to reverse or the order it inserts the html code will be backwards.
                 Array.Reverse(listItems);
                 int totalRemove = listEnd + 2 - listStart;
                 myStringBuilder.Remove(listStart, totalRemove);
@@ -117,6 +118,7 @@ namespace United_Caring_Services.Controllers
                 int length = listEnd - (listStart + 7);
                 string listString = myStringBuilder.ToString(listStart + 7, length);
                 string[] listItems = listString.Split(';');
+ 		//Make sure to reverse or the order it inserts the html code will be backwards.
                 Array.Reverse(listItems);
                 int totalRemove = listEnd + 2 - listStart;
                 myStringBuilder.Remove(listStart, totalRemove);
